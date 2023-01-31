@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
-mongoose.set('strictQuery', false);
-const nodeSchema = new mongoose.Schema({
-  name: {
-    type: String,
+mongoose.set("strictQuery", false);
+const nodeSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    type: {
+      type: String,
+      enum: ["PER", "ORG", "LOC"],
+    },
   },
-  type: {
-    type: String,
-    enum: ["PER", "ORG", "LOC"],
-  },
-});
+  { timestamps: true }
+);
 
 const Node = mongoose.model("Node", nodeSchema);
 module.exports = Node;
