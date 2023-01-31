@@ -9,6 +9,7 @@ const nodeSchema = new mongoose.Schema(
       type: String,
       enum: ["PER", "ORG", "LOC"],
     },
+
   },
   { timestamps: true }
 );
