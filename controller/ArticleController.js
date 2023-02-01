@@ -20,3 +20,12 @@ module.exports.createArticle = async (req, res) => {
     return;
   }
 };
+
+module.exports.getArticle = async (req, res) => {
+  try {
+    const article = await Article.find();
+    return res.status(200).json(article);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};

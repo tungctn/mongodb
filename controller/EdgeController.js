@@ -1,6 +1,4 @@
 const Edge = require("../model/Edge");
-const Node = require("../model/Node");
-const Article = require("../model/Article");
 
 module.exports.createEdge = async (req, res) => {
   try {
@@ -23,7 +21,9 @@ module.exports.createEdge = async (req, res) => {
       });
       // Each element of edge.articles is an object, so we need to convert it to string
       let articles = edge.articles.map((article) => article.toString());
-      articles = articles.filter((item, index) => articles.indexOf(item) === index);
+      articles = articles.filter(
+        (item, index) => articles.indexOf(item) === index
+      );
       edge.articles = articles;
       edge.size = articles.length;
       edge.save();
@@ -31,31 +31,30 @@ module.exports.createEdge = async (req, res) => {
         message: "Edge already exists",
       });
     } else {
-      const edge = await new Edge({
-        ...req.body,
+      for (const edge of req.body) {
+        const element = await new Edge({ ...edge });
+        element.save();
+      }
+      return res.status(200).json({
+        message: "Edge created",
       });
-      edge.save();
     }
-    res.status(200).json({
-      message: "Edge created",
-    });
-    return;
   } catch (error) {
-    res.status(500).json(error);
-    return;
+    return res.status(500).json(error);
   }
 };
 
-module.exports.createPattern = async (req, res) => {
-  try {
-    for (const edge of req.body) {
-      const element = await new Edge({ ...edge });
-      element.save();
-    }
-    res.status(200).json(req.body);
-    return;
-  } catch (error) {
-    res.status(500).json(error);
-    return;
-  }
-};
+// module.exports.createEdge = async (req, res) => {
+//   try {
+//     console.log(req.body);
+//     for (const edge of req.body) {
+//       const element = await new Edge({ ...edge });
+//       element.save();
+//     }
+//     res.status(200).json(req.body);
+//     return;
+//   } catch (error) {
+//     res.status(500).json(error);
+//     return;
+//   }
+// };
