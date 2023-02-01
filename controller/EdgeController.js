@@ -59,7 +59,11 @@ module.exports.createEdge = async (req, res) => {
 
 module.exports.createPattern = async (req, res) => {
   try {
-    res.status(200).json();
+    for (const edge of req.body) {
+      const element = await new Edge({ ...edge });
+      element.save();
+    }
+    res.status(200).json(req.body);
     return;
   } catch (error) {
     res.status(500).json(error);
