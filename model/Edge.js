@@ -19,6 +19,9 @@ const edgeSchema = new mongoose.Schema(
         ref: "Article",
       },
     ],
+    size: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
