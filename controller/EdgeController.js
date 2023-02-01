@@ -2,16 +2,6 @@ const Edge = require("../model/Edge");
 const Node = require("../model/Node");
 const Article = require("../model/Article");
 
-function unique(arr) {
-  var newArr = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (!newArr.includes(arr[i].toString())) {
-      newArr.push(arr[i]);
-    }
-  }
-  return newArr;
-}
-
 module.exports.createEdge = async (req, res) => {
   try {
     let arr_source = [];
@@ -31,10 +21,9 @@ module.exports.createEdge = async (req, res) => {
         source: req.body.source,
         target: req.body.target,
       });
-      let articles = edge.articles.concat(req.body.articles);
-      console.log(articles);
-      articles = unique(articles);
-      console.log(articles);
+      // Each element of edge.articles is an object, so we need to convert it to string
+      let articles = edge.articles.map((article) => article.toString());
+      articles = articles.filter((item, index) => articles.indexOf(item) === index);
       edge.articles = articles;
       edge.size = articles.length;
       edge.save();
