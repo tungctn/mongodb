@@ -4,9 +4,12 @@ const NodeController = require("../controller/NodeController");
 const ArticleController = require("../controller/ArticleController");
 const EdgeController = require("../controller/EdgeController");
 
+const Node = require("../model/Node");
+const Edge = require("../model/Edge");
+
 appRoute.get("/", async (req, res) => {
-  let nodes = await NodeController.find();
-  let edges = await EdgeController.find();
+  let nodes = await Node.find();
+  let edges = await Edge.find();
   nodes = nodes.map((node) => {
     return {
       key: node._id,
