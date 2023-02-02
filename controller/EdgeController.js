@@ -12,8 +12,9 @@ module.exports.createEdge = async (req, res) => {
           { source: edge.target, target: edge.source },
         ],
       });
+      console.log(existEdge);
       if (existEdge) {
-        let articles = existEdge.articles.map((article) => article.toString());
+        let articles = existEdge.articles?.map((article) => article.toString());
         articles = articles.concat(edge.articles);
         articles = articles.filter(
           (item, index) => articles.indexOf(item) === index
