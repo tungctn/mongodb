@@ -37,3 +37,20 @@ module.exports.createEdge = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
+
+module.exports.getAllEdgesInCSV = async (req, res) => {
+  try {
+    const edges = await Edge.find();
+    let csv = "id,from,to,weight\n";
+    for (const edge of edges) {
+      csv += `${edge._id.toString()},${edge.source},${edge.target},${edge.size}\n`;
+    }
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=edges.csv");
+    res.status(200).send(csv);
+    return;
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
+};

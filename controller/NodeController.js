@@ -30,3 +30,20 @@ module.exports.getNodes = async (req, res) => {
     return;
   }
 };
+
+module.exports.getAllNodesInCSV = async (req, res) => {
+  try {
+    const nodes = await Node.find();
+    let csv = "id,entity,type,cluster,score\n";
+    for (const node of nodes) {
+      csv += `${node._id.toString()},${node.name},${node.type},${node.cluster},${node.score}\n`;
+    }
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=nodes.csv");
+    res.status(200).send(csv);
+    return;
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
+};
