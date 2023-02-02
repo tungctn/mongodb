@@ -11,7 +11,6 @@ module.exports.createEdge = async (req, res) => {
     }
 
     for (const edge of req.body) {
-      console.log(edge);
       console.log(edge.source);
       console.log(edge.target);
       if (
@@ -33,11 +32,9 @@ module.exports.createEdge = async (req, res) => {
         existEdge.articles = articles;
         existEdge.size = articles.length;
         existEdge.save();
-        console.log("Update edge successfully");
       } else {
         const element = await new Edge({ ...edge });
         element.save();
-        console.log("Create edge successfully");
       }
     }
     res.status(200).json({
