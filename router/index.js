@@ -13,8 +13,8 @@ appRoute.get("/", async (req, res) => {
   nodes = nodes.map((node) => {
     return {
       key: node._id,
-      name: node.name,
-      type: node.type,
+      label: node.name,
+      tag: node.type,
       cluster: node.cluster,
       score: node.score,
     };
