@@ -6,6 +6,15 @@ module.exports.createNode = async (req, res) => {
     for (const node of req.body) {
       const node_search = await Node.findOne({ name: node.name });
       if (node_search) {
+        // if there exists field "cluster" in node, update it
+        if (node.cluster) {
+          node_search.cluster = node.cluster;
+        }
+        // if there exists field "score" in node, update it
+        if (node.score) {
+          node_search.score = node.score;
+        }
+        node_search.save();
         arr.push(node_search._id);
       } else {
         const element = await new Node({ ...node });
