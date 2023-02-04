@@ -18,7 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", ["http://localhost:3000", "https://jellyfish-app-8ib89.ondigitalocean.app/"]);
+  res.header("Access-Control-Allow-Origin", "https://jellyfish-app-8ib89.ondigitalocean.app/");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
