@@ -10,9 +10,6 @@ const corsOptions = {
   //To allow requests from client
   origin: [
     "http://localhost:3000/",
-    "http://127.0.0.1:3000/",
-    "https://plm-deploy.onrender.com/",
-    "https://production-move-one.vercel.app/",
     "https://jellyfish-app-8ib89.ondigitalocean.app/"
   ],
   credentials: true,
@@ -21,7 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", ["http://localhost:3000", "https://jellyfish-app-8ib89.ondigitalocean.app/"]);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
