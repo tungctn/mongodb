@@ -18,10 +18,6 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: ["news", "economy", "world", "entertainment"],
-    },
-    content: {
-      type: String,
-      required: true,
     }
   },
   { timestamps: true }

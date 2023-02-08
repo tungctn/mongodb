@@ -6,6 +6,15 @@ module.exports.createNode = async (req, res) => {
     for (const node of req.body) {
       const node_search = await Node.findOne({ name: node.name });
       if (node_search) {
+        // if there exists field "cluster" in node, update it
+        if (node.cluster) {
+          node_search.cluster = node.cluster;
+        }
+        // if there exists field "score" in node, update it
+        if (node.score) {
+          node_search.score = node.score;
+        }
+        node_search.save();
         arr.push(node_search._id);
       } else {
         const element = await new Node({ ...node });
@@ -24,6 +33,23 @@ module.exports.getNodes = async (req, res) => {
   try {
     const nodes = await Node.find();
     res.status(200).json(nodes);
+    return;
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
+};
+
+module.exports.getAllNodesInCSV = async (req, res) => {
+  try {
+    const nodes = await Node.find();
+    let csv = "id,entity,type,cluster,score\n";
+    for (const node of nodes) {
+      csv += `${node._id.toString()},${node.name},${node.type},${node.cluster},${node.score}\n`;
+    }
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=nodes.csv");
+    res.status(200).send(csv);
     return;
   } catch (error) {
     res.status(500).json(error);
