@@ -37,7 +37,6 @@ module.exports.createEdge = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
-
 module.exports.getAllEdgesInCSV = async (req, res) => {
   try {
     const edges = await Edge.find();
