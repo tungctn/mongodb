@@ -3,22 +3,29 @@ const appRoute = express();
 const NodeController = require("../controller/NodeController");
 const ArticleController = require("../controller/ArticleController");
 const EdgeController = require("../controller/EdgeController");
+const DayController = require("../controller/DayController");
 
 const Node = require("../model/Node");
 const Edge = require("../model/Edge");
+const Day = require("../model/Day");
 
 appRoute.get("/", async (req, res) => {
   let nodes = await Node.find();
   let edges = await Edge.find();
-  nodes = nodes.map((node) => {
-    return {
-      key: node._id,
-      label: node.name,
-      tag: node.type,
-      cluster: node.cluster,
-      score: node.score,
-    };
-  });
+  let days = await Day.find();
+  nodes = nodes
+    .filter((node) => {
+      const date = days[0];
+    })
+    .map((node) => {
+      return {
+        key: node._id,
+        label: node.name,
+        tag: node.type,
+        cluster: node.cluster,
+        score: node.score,
+      };
+    });
   edges = edges.map((edge) => {
     return {
       key: edge._id,
@@ -38,13 +45,13 @@ appRoute.get("/", async (req, res) => {
   return res.status(200).json({
     nodes: nodes,
     edges: edges,
-    "clusters": [{ "key": "0", "color": "#6c3e81", "clusterLabel": "All nodes" }],
-    "tags": [
-      { "key": "ORG", "image": "organization.svg" },
-      { "key": "PER", "image": "person.svg" },
-      { "key": "LOC", "image": "unknown.svg" },
-      { "key": "MISC", "image": "unknown.svg" }
-    ]
+    clusters: [{ key: "0", color: "#6c3e81", clusterLabel: "All nodes" }],
+    tags: [
+      { key: "ORG", image: "organization.svg" },
+      { key: "PER", image: "person.svg" },
+      { key: "LOC", image: "unknown.svg" },
+      { key: "MISC", image: "unknown.svg" },
+    ],
   });
 });
 
@@ -54,5 +61,8 @@ appRoute.get("/csv/edge", EdgeController.getAllEdgesInCSV);
 appRoute.post("/node", NodeController.createNode);
 appRoute.post("/article", ArticleController.createArticle);
 appRoute.post("/edge", EdgeController.createEdge);
+appRoute.post("/daystart", DayController.createDayStart);
+appRoute.post("/dayend", DayController.createDayEnd);
+appRoute.post("/day", DayController.createDay);
 
 module.exports = appRoute;
