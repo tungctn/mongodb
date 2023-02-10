@@ -27,5 +27,8 @@ const edgeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Index with createdAt
+edgeSchema.index({ createdAt: -1 });
+
 const Edge = mongoose.model("Edge", edgeSchema);
 module.exports = Edge;
