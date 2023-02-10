@@ -17,8 +17,8 @@ appRoute.get("/", async (req, res) => {
   nodes = nodes
     .filter((node) => {
       if (
-        new Date(node.createdAt) >= new Date(date.date.start) &&
-        new Date(node.createdAt) <= new Date(date.date.end)
+        new Date(node.updatedAt) >= new Date(date.date.start) &&
+        new Date(node.updatedAt) <= new Date(date.date.end)
       ) {
         return node;
       }
@@ -35,8 +35,8 @@ appRoute.get("/", async (req, res) => {
   edges = edges
     .filter((edge) => {
       if (
-        new Date(edge.createdAt) >= new Date(date.date.start) &&
-        new Date(edge.createdAt) <= new Date(date.date.end)
+        new Date(edge.updatedAt) >= new Date(date.date.start) &&
+        new Date(edge.updatedAt) <= new Date(date.date.end)
       ) {
         return edge;
       }

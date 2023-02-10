@@ -16,7 +16,7 @@ const daySchema = new mongoose.Schema(
 );
 
 // Index with createdAt
-daySchema.index({ createdAt: -1 });
+daySchema.index({ updatedAt: -1 });
 
 const Day = mongoose.model("Day", daySchema);
 module.exports = Day;

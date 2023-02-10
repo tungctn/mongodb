@@ -22,7 +22,7 @@ const nodeSchema = new mongoose.Schema(
 );
 
 // Index with createdAt
-nodeSchema.index({ createdAt: -1 });
+nodeSchema.index({ updatedAt: -1 });
 
 const Node = mongoose.model("Node", nodeSchema);
 module.exports = Node;
