@@ -21,5 +21,8 @@ const nodeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Index with createdAt
+nodeSchema.index({ createdAt: -1 });
+
 const Node = mongoose.model("Node", nodeSchema);
 module.exports = Node;

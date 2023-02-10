@@ -10,16 +10,19 @@ const corsOptions = {
   //To allow requests from client
   origin: [
     "http://localhost:3000/",
-    "https://jellyfish-app-8ib89.ondigitalocean.app"
+    "https://jellyfish-app-8ib89.ondigitalocean.app",
   ],
   credentials: true,
   exposedHeaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://jellyfish-app-8ib89.ondigitalocean.app");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
@@ -38,4 +41,3 @@ mongoose.connect(process.env.MONGDB_URL, () => {
 app.listen(3001, () => {
   console.log("Express app listening on port 3001");
 });
-
