@@ -41,9 +41,7 @@ appRoute.get("/", async (req, res) => {
     "clusters": [{ "key": "0", "color": "#6c3e81", "clusterLabel": "All nodes" }],
     "tags": [
       { "key": "ORG", "image": "organization.svg" },
-      { "key": "PER", "image": "person.svg" },
-      { "key": "LOC", "image": "unknown.svg" },
-      { "key": "MISC", "image": "unknown.svg" }
+      { "key": "PER", "image": "person.svg" }
     ]
   });
 });
