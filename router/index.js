@@ -12,8 +12,8 @@ const Day = require("../model/Day");
 appRoute.get("/", async (req, res) => {
   let nodes = await Node.find();
   let edges = await Edge.find();
-  let days = await Day.find();
-  const date = days[days.length - 1];
+  // Get the latest day
+  let date = await Day.findOne().sort({ createdAt: -1 });
   nodes = nodes
     .filter((node) => {
       if (
@@ -74,8 +74,6 @@ appRoute.get("/csv/edge", EdgeController.getAllEdgesInCSV);
 appRoute.post("/node", NodeController.createNode);
 appRoute.post("/article", ArticleController.createArticle);
 appRoute.post("/edge", EdgeController.createEdge);
-appRoute.post("/daystart", DayController.createDayStart);
-appRoute.post("/dayend", DayController.createDayEnd);
 appRoute.post("/day", DayController.createDay);
 
 module.exports = appRoute;
