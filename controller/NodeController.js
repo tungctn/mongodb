@@ -14,6 +14,8 @@ module.exports.createNode = async (req, res) => {
         if (node.score) {
           node_search.score = node.score;
         }
+        // update updatedAt
+        node_search.updatedAt = new Date();
         node_search.save();
         arr.push(node_search._id);
       } else {
