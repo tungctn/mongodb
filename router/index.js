@@ -13,9 +13,15 @@ appRoute.get("/", async (req, res) => {
   let nodes = await Node.find();
   let edges = await Edge.find();
   let days = await Day.find();
+  const date = days[days.length - 1];
   nodes = nodes
     .filter((node) => {
-      const date = days[0];
+      if (
+        new Date(node.createdAt) >= new Date(date.date.start) &&
+        new Date(node.createdAt) <= new Date(date.date.end)
+      ) {
+        return node;
+      }
     })
     .map((node) => {
       return {
@@ -26,22 +32,31 @@ appRoute.get("/", async (req, res) => {
         score: node.score,
       };
     });
-  edges = edges.map((edge) => {
-    return {
-      key: edge._id,
-      source: edge.source,
-      target: edge.target,
-      size: edge.size,
-      articles: edge.articles.map((article) => {
-        return {
-          key: article._id,
-          title: article.title,
-          url: article.url,
-          date: article.pubDate,
-        };
-      }),
-    };
-  });
+  edges = edges
+    .filter((edge) => {
+      if (
+        new Date(edge.createdAt) >= new Date(date.date.start) &&
+        new Date(edge.createdAt) <= new Date(date.date.end)
+      ) {
+        return edge;
+      }
+    })
+    .map((edge) => {
+      return {
+        key: edge._id,
+        source: edge.source,
+        target: edge.target,
+        size: edge.size,
+        articles: edge.articles.map((article) => {
+          return {
+            key: article._id,
+            title: article.title,
+            url: article.url,
+            date: article.pubDate,
+          };
+        }),
+      };
+    });
   return res.status(200).json({
     nodes: nodes,
     edges: edges,
